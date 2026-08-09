@@ -9,3 +9,6 @@ wheels/
 .pytest_cache/
 # Virtual environments
 .venv
+
+deep-learning-from-scratch/
+dataset/

@@ -1,2 +1,6 @@
+import numpy as np
+
+
 def cel(y, t):
-    pass
+    delta = 1e-7
+    return -np.sum(t * np.log(y + delta))
