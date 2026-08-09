@@ -2,4 +2,6 @@ import numpy as np
 
 
 def softmax(x: float) -> float:
-    return np.exp(x) / np.sum(np.exp(x))
+    c = np.max(x)
+    exp_x = np.exp(x - c)
+    return exp_x / np.sum(exp_x)
