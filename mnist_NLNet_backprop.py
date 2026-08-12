@@ -4,7 +4,7 @@ import sys
 import matplotlib.pyplot as plt
 import numpy as np
 
-from TLnet_backprop import TwoLayerNet
+from NLnet import NLayerNet
 
 sys.path.append(os.pardir)
 
@@ -12,12 +12,12 @@ from dataset.mnist import load_mnist
 
 (x_train, t_train), (x_test, t_test) = load_mnist(normalize=True, one_hot_label=True)
 
-network = TwoLayerNet(784, 50, 10)
+network = NLayerNet(784, 6, [512, 256, 128, 64, 32, 16], 10)
 
-iters_num = 5000
+iters_num = 1801
 train_size = x_train.shape[0]
 batch_size = 100
-learing_rate = 0.1
+learing_rate = 0.01
 
 train_loss_list = []
 train_acc_list = []
@@ -33,7 +33,7 @@ for i in range(iters_num):
 
     grad = network.gradient(x_batch, t_batch)
 
-    for key in ("W1", "b1", "W2", "b2"):
+    for key in network.params:
         network.params[key] -= learing_rate * grad[key]
 
     loss = network.loss(x_batch, t_batch)

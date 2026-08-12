@@ -1,6 +1,3 @@
-from numpy.typing import NDArray
-
-
 class Relu:
     def __init__(self):
 
@@ -12,8 +9,7 @@ class Relu:
         out[self.mask] = 0
         return out
 
-    def backward(self, dout: NDArray) -> NDArray:
-        dout[self.mask] = 0
-        dx = dout
-
+    def backward(self, dout):
+        dx = dout.copy()
+        dx[self.mask] = 0
         return dx
