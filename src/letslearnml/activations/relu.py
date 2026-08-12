@@ -1,7 +1,7 @@
 from numpy.typing import NDArray
 
 
-class ReLU:
+class Relu:
     def __init__(self):
 
         self.mask = None
