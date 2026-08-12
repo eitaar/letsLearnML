@@ -12,7 +12,7 @@ from dataset.mnist import load_mnist
 
 (x_train, t_train), (x_test, t_test) = load_mnist(normalize=True, one_hot_label=True)
 
-network = NLayerNet(784, 6, [512, 256, 128, 64, 32, 16], 10)
+network = NLayerNet(784, 10, [1024, 784, 512, 384, 256, 128, 64, 32, 16, 12], 10)
 
 iters_num = 1801
 train_size = x_train.shape[0]
