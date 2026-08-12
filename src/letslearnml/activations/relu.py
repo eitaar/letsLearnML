@@ -1,5 +1,19 @@
-import numpy as np
+from numpy.typing import NDArray
 
 
-def ReLU(x: float) -> float:
-    return np.maximum(0, x)
+class ReLU:
+    def __init__(self):
+
+        self.mask = None
+
+    def forward(self, x):
+        self.mask = x <= 0
+        out = x.copy()
+        out[self.mask] = 0
+        return out
+
+    def backward(self, dout: NDArray) -> NDArray:
+        dout[self.mask] = 0
+        dx = dout
+
+        return dx

@@ -1,14 +1,12 @@
-import random
-
 import numpy as np
 
-from letslearnml.activations import ReLU
+from letslearnml.activations import ReLU as ReLU_Class
 
 
 def test_relu():
-    randint = random.randint(1, 10)
-    assert ReLU(-1) == 0
-    assert ReLU(0) == 0
-    assert ReLU(1) == 1
-    assert ReLU(randint) == randint
-    assert np.allclose(ReLU(np.array([-1, 0, 1, 2])), np.array([0, 0, 1, 2]))
+    relu = ReLU_Class()
+    x = np.array([-2, 0, 3, 7])
+    dout = np.array([10, 20, 30, 40])
+
+    assert np.allclose(relu.forward(x), np.maximum(0, x))
+    assert np.allclose(relu.backward(dout.copy()), np.where(x > 0, dout, 0))
