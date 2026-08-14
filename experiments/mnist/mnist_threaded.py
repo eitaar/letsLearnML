@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from dataset.mnist import load_mnist
-from TLnet import TwoLayerNet
+from experiments.models.TLnet import TwoLayerNet
 
 WORKERS = min(8, os.cpu_count() or 1)
 _PARAMETER_KEYS = ("W1", "b1", "W2", "b2")

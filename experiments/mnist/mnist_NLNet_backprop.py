@@ -1,14 +1,9 @@
-import os
-import sys
+from collections.abc import Sequence
 
 import numpy as np
 
-from NLnet import NLayerNet
-
-sys.path.append(os.pardir)
-from collections.abc import Sequence
-
 from dataset.mnist import load_mnist
+from experiments.models.NLnet import NLayerNet
 
 
 def mnist(hidden_layer: int, hidden_size: Sequence[int]):

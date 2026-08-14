@@ -3,7 +3,7 @@ import time
 
 import matplotlib.pyplot as plt
 
-from mnist_NLNet_backprop import mnist
+from experiments.mnist.mnist_NLNet_backprop import mnist
 
 hidden_sizes = [
     [64],

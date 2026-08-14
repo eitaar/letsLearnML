@@ -6,13 +6,16 @@ class BatchNorm:
         self.x: float
         self.gamma: float
         self.beta: float
+        self.dsigma: float
+        self.dgamma: float
         self.x_cap: float
         self.eps = 1e-5
         self.mu: float
         self.sigma_squared: float
         self.sigma: float
 
-    def forward(self, x, gamma, beta, eps=1e-5):
+    def forward(self, x, gamma, beta, is_training: bool, eps=1e-5):
+
         self.x = x
         self.gamma = gamma
         self.beta = beta
@@ -28,8 +31,8 @@ class BatchNorm:
         return out
 
     def backward(self, dout):
-        dgamma = np.sum(self.x_cap * dout, axis=0)
-        dbeta = np.sum(dout, axis=0)
+        self.dgamma = np.sum(self.x_cap * dout, axis=0)
+        self.dbeta = np.sum(dout, axis=0)
         dx_cap = dout * self.gamma
         dsigma_sq = np.sum(dx_cap * (self.x - self.mu), axis=0) * -0.5 * self.sigma**-3
         dmu = np.sum(-dx_cap / self.sigma, axis=0) + dsigma_sq * np.mean(-2 * (self.x - self.mu), axis=0)

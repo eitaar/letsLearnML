@@ -1,9 +1,5 @@
-import os
-import sys
 from collections import OrderedDict
 from collections.abc import Sequence
-
-sys.path.append(os.pardir)  # 親ディレクトリのファイルをインポートするための設定
 
 import numpy as np
 

@@ -1,12 +1,7 @@
-import os
-import sys
-
 import matplotlib.pyplot as plt
 import numpy as np
 
-from TLnet_backprop import TwoLayerNet
-
-sys.path.append(os.pardir)
+from experiments.models.TLnet_backprop import TwoLayerNet
 
 from dataset.mnist import load_mnist
 

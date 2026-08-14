@@ -1,9 +1,4 @@
-import os
-import sys
-
 import numpy as np
-
-sys.path.append(os.pardir)
 
 from letslearnml import activations, gradients, loss_functions
 
