@@ -4,6 +4,7 @@ import numpy as np
 
 from dataset.mnist import load_mnist
 from experiments.models.NLnet import NLayerNet
+from letslearnml.optimiser import AdaGrad
 
 
 def mnist(hidden_layer: int, hidden_size: Sequence[int]):
@@ -22,6 +23,7 @@ def mnist(hidden_layer: int, hidden_size: Sequence[int]):
 
     iter_per_epoch = max(train_size / batch_size, 1)
 
+    optimiser = AdaGrad(learing_rate)
     for i in range(iters_num):
         print(f"{i}/{iters_num}, {(i / iters_num) * 100}%")
         batch_mask = np.random.choice(train_size, batch_size)
@@ -30,8 +32,7 @@ def mnist(hidden_layer: int, hidden_size: Sequence[int]):
 
         grad = network.gradient(x_batch, t_batch)
 
-        for key in network.params:
-            network.params[key] -= learing_rate * grad[key]
+        optimiser.update(network.params, grad)
 
         loss = network.loss(x_batch, t_batch)
         train_loss_list.append(loss)
