@@ -4,7 +4,7 @@ import numpy as np
 
 from dataset.mnist import load_mnist
 from experiments.models.NLnet import NLayerNet
-from letslearnml.optimiser import AdaGrad
+from letslearnml.optimiser import Adam
 
 
 def mnist(hidden_layer: int, hidden_size: Sequence[int]):
@@ -23,7 +23,7 @@ def mnist(hidden_layer: int, hidden_size: Sequence[int]):
 
     iter_per_epoch = max(train_size / batch_size, 1)
 
-    optimiser = AdaGrad(learing_rate)
+    optimiser = Adam(beta1=0.9, beta2=0.999)
     for i in range(iters_num):
         print(f"{i}/{iters_num}, {(i / iters_num) * 100}%")
         batch_mask = np.random.choice(train_size, batch_size)

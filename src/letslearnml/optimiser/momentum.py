@@ -14,5 +14,7 @@ class Momentum:
                 self.v[key] = np.zeros_like(val)
 
         for key in params.keys():
+            # v += αv - η * dL/dw
             self.v[key] = self.momentum * self.v[key] - self.lr * grads[key]
+            # W += W + v
             params[key] += self.v[key]

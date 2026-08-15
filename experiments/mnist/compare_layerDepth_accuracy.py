@@ -1,11 +1,11 @@
-hidden_layers = [1, 2]
+hidden_layers = [1, 2, 3, 4, 5]
 import time
 
 import matplotlib.pyplot as plt
 
 from experiments.mnist.mnist_NLNet_backprop import mnist
 
-hidden_sizes = [[64], [64, 32]]
+hidden_sizes = [[64], [64, 64], [64, 64, 64], [64, 64, 64, 64], [64, 64, 64, 64, 64]]
 trainlist = []
 testlist = []
 
