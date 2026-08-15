@@ -1,11 +1,12 @@
 hidden_layers = [1, 2, 3, 4, 5]
-import time
+# hidden_layers = [1]
 
 import matplotlib.pyplot as plt
 
 from experiments.mnist.mnist_NLNet_backprop import mnist
 
 hidden_sizes = [[64], [64, 64], [64, 64, 64], [64, 64, 64, 64], [64, 64, 64, 64, 64]]
+# hidden_sizes = [[64]]
 trainlist = []
 testlist = []
 
@@ -13,8 +14,8 @@ for i in range(len(hidden_layers)):
     print("-----------------------")
     print(f"{i + 1}/{len(hidden_layers)}")
     print("-----------------------")
-    time.sleep(0.05)
-    (train_acc, test_acc) = mnist(hidden_layers[i], hidden_sizes[i])
+    # time.sleep(0.05)
+    (train_acc, test_acc) = mnist(hidden_layers[i], hidden_sizes[i], iters_num=3601)
     trainlist.append(train_acc)
     testlist.append(test_acc)
 

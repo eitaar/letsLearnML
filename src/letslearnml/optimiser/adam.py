@@ -20,7 +20,7 @@ class Adam:
                 self.m[key] = np.zeros_like(val)
                 self.v[key] = np.zeros_like(val)
 
-        for key in params.keys():
+        for key in params:
             self.m[key] = (self.beta1 * self.m[key]) + (1 - self.beta1) * grads[key]
             m_hat = self.m[key] / (1 - self.beta1**self.t)
             self.v[key] = (self.beta2 * self.v[key]) + (1 - self.beta2) * np.square(grads[key])

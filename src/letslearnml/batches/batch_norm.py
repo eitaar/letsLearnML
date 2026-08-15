@@ -13,22 +13,38 @@ class BatchNorm:
         self.mu: float
         self.sigma_squared: float
         self.sigma: float
+        self.running_mean = None
+        self.running_var = None
+        self.momentum = 0.9
 
     def forward(self, x, gamma, beta, is_training: bool, eps=1e-5):
-
-        self.x = x
-        self.gamma = gamma
-        self.beta = beta
         self.eps = eps
+        if self.running_mean is None or self.running_var is None:
+            self.running_mean = np.zeros(x.shape[1])
+            self.running_var = np.zeros(x.shape[1])
 
-        self.mu = np.mean(x, axis=0)
-        self.sigma_squared = np.mean((x - self.mu) ** 2, axis=0)
-        self.sigma = np.sqrt(self.sigma_squared + self.eps)
+        if is_training:
+            self.x = x
+            self.gamma = gamma
+            self.beta = beta
 
-        self.x_cap = (x - self.mu) / self.sigma
+            self.mu = np.mean(x, axis=0)
+            self.sigma_squared = np.mean((x - self.mu) ** 2, axis=0)
+            self.sigma = np.sqrt(self.sigma_squared + self.eps)
 
-        out = gamma * self.x_cap + beta
-        return out
+            self.running_mean = self.momentum * self.running_mean + (1 - self.momentum) * self.mu
+            self.running_var = self.momentum * self.running_var + (1 - self.momentum) * self.sigma_squared
+
+            self.x_cap = (x - self.mu) / self.sigma
+            out = gamma * self.x_cap + beta
+            return out
+        else:
+            mu = self.running_mean
+            sigma_squared = self.running_var
+            sigma = np.sqrt(sigma_squared + self.eps)
+            x_cap = (x - mu) / sigma
+            out = gamma * x_cap + beta
+            return out
 
     def backward(self, dout):
         self.dgamma = np.sum(self.x_cap * dout, axis=0)

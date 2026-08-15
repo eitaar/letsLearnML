@@ -4,5 +4,6 @@ def main() -> None:
 
 from .activations import *
 from .affines import *
+from .batches import *
 from .gradients import *
 from .loss_functions import *

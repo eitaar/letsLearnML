@@ -7,12 +7,11 @@ from experiments.models.NLnet import NLayerNet
 from letslearnml.optimiser import Adam
 
 
-def mnist(hidden_layer: int, hidden_size: Sequence[int]):
+def mnist(hidden_layer: int, hidden_size: Sequence[int], iters_num: int = 1801):
     (x_train, t_train), (x_test, t_test) = load_mnist(normalize=True, one_hot_label=True)
 
     network = NLayerNet(784, hidden_layer, hidden_size, 10)
 
-    iters_num = 1801
     train_size = x_train.shape[0]
     batch_size = 100
     learing_rate = 0.01
@@ -31,10 +30,9 @@ def mnist(hidden_layer: int, hidden_size: Sequence[int]):
         t_batch = t_train[batch_mask]
 
         grad = network.gradient(x_batch, t_batch)
+        loss = network.lastLayer.loss
 
         optimiser.update(network.params, grad)
-
-        loss = network.loss(x_batch, t_batch)
         train_loss_list.append(loss)
 
         if i % iter_per_epoch == 0:
