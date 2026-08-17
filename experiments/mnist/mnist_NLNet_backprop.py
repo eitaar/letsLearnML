@@ -1,4 +1,6 @@
+import pickle
 from collections.abc import Sequence
+from pathlib import Path
 
 import numpy as np
 
@@ -52,4 +54,30 @@ def mnist(hidden_layer: int, hidden_size: Sequence[int], iters_num: int = 1801):
     # plt.show()
 
     # return the latest accuracy
-    return train_acc_list[-1], test_acc_list[-1]
+    batch_norm_stats = {}
+
+    if network.use_batch_norm:
+        for i in range(hidden_layer):
+            layer_name = f"BatchNorm{i + 1}"
+            layer = network.layers[layer_name]
+
+            batch_norm_stats[layer_name] = {
+                "running_mean": layer.running_mean,
+                "running_var": layer.running_var,
+            }
+        save_path = Path("mnist_NLnet_backprop.pkl")
+
+        with save_path.open("wb") as f:
+            pickle.dump(
+                {
+                    "params": network.params,
+                    "hidden_layer": hidden_layer,
+                    "hidden_size": list(hidden_size),
+                    "use_batch_norm": network.use_batch_norm,
+                    "batch_norm_stats": batch_norm_stats,
+                },
+                f,
+            )
+
+        print("saved weights to", save_path)
+        return train_acc_list[-1], test_acc_list[-1]
